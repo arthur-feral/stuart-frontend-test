@@ -3,6 +3,10 @@ const TerserPlugin = require('terser-webpack-plugin'); // eslint-disable-line im
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 const CopyWebpackPlugin = require('copy-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // eslint-disable-line import/no-extraneous-dependencies
+const autoprefixer = require('autoprefixer'); // eslint-disable-line import/no-extraneous-dependencies
+const postCSSFlexbugsFixes = require('postcss-flexbugs-fixes'); // eslint-disable-line import/no-extraneous-dependencies
+
 
 const root = process.cwd();
 const distPath = path.resolve(root, './public/');
@@ -34,8 +38,42 @@ module.exports = () => ({
         },
       },
       {
+        test: /\.scss/,
+        exclude: /\.m\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              sourceMap: true,
+              url: false,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                postCSSFlexbugsFixes,
+                autoprefixer({
+                  flexbox: 'no-2009',
+                }),
+              ],
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
         test: /\.m\.scss$/,
         use: [
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -44,6 +82,18 @@ module.exports = () => ({
               url: false,
               modules: true,
               localIdentName: '[name]___[local]___[hash:base64:5]',
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                postCSSFlexbugsFixes,
+                autoprefixer({
+                  flexbox: 'no-2009',
+                }),
+              ],
+              sourceMap: true,
             },
           },
           {
@@ -70,6 +120,7 @@ module.exports = () => ({
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new CopyWebpackPlugin(
       [
         {
@@ -80,6 +131,8 @@ module.exports = () => ({
     ),
     new HtmlWebpackPlugin({
       title: 'Stuart Frontend Test',
+      GOOGLE_MAP_API_KEY: 'AIzaSyCBaxsr__YSoipQ7VDrrfNf8rHCZvBfscw',
+      template: 'index.html',
     }),
   ],
   optimization: {

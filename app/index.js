@@ -11,6 +11,10 @@ import {
 } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
+import Map from './Map';
+import styles from './app.m.scss';
+import { domLoaded } from './actions';
+import reducer from './reducer';
 
 const sagaMiddleware = createSagaMiddleware({
   onError: (...args) => {
@@ -18,7 +22,9 @@ const sagaMiddleware = createSagaMiddleware({
     console.error('Uncaught error from saga', ...args);
   },
 });
-const reducers = {};
+const reducers = {
+  app: reducer,
+};
 const middlewares = [
   sagaMiddleware,
 ];
@@ -34,13 +40,17 @@ forEach(
     sagaMiddleware.run(saga);
   },
 );
-const body = document.getElementsByTagName('body')[0];
-const appContainer = document.createElement('div');
-appContainer.id = 'app';
-body.appendChild(appContainer);
+
+// Render test app
 ReactDOM.render(
   <Provider store={store}>
-    <div>It works!</div>
+    <div className={styles.app}>
+      <Map />
+    </div>
   </Provider>,
   document.getElementById('app'),
 );
+
+window.onload = () => {
+  store.dispatch(domLoaded());
+};
