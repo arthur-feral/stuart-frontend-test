@@ -1,0 +1,9 @@
+.idea/*
+.workspace/
+node_modules/
+*.swp
+**.DS_Store
+
+dist/
+cache/
+yarn-error.log
