@@ -124,8 +124,8 @@ module.exports = () => ({
     new CopyWebpackPlugin(
       [
         {
-          from: './app/assets/*',
-          to: path.resolve(root, 'assets/'),
+          from: 'app/assets',
+          to: 'assets',
         },
       ],
     ),

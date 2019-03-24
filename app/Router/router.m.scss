@@ -1,0 +1,86 @@
+@import '../_variables';
+
+.router {
+    position: absolute;
+    top: $marginBig;
+    left: $marginBig;
+    display: flex;
+    flex-direction: row;
+    width: 360px;
+    border-radius: $borderRadius;
+    background-color: white;
+    padding: $marginMedium;
+    box-shadow: $popupShadow;
+}
+
+.icons,
+.inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputs {
+    margin-left: $marginSmall;
+    width: 100%;
+}
+
+.icon,
+.inputContainer {
+    margin-bottom: $marginMedium;
+}
+
+.inputContainer {
+    position: relative;
+    display: flex;
+}
+
+.inputPlaceholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    color: #8596A6;
+
+    &.hidden {
+        color: transparent;
+    }
+}
+
+.input,
+.inputPlaceholder {
+    line-height: $textSize;
+    font-size: $textSize;
+    padding: 8px;
+    background-color: #F0F3F7;
+    box-sizing: border-box;
+}
+
+.input {
+    z-index: 1;
+    border-radius: $borderRadiusSmall;
+    background-color: transparent;
+    border: none;
+    height: 32px;
+    width: 100%;
+    display: flex;
+    color: #252525;
+}
+
+.submitButton {
+    border-radius: $borderRadiusSmall;
+    padding: 10px;
+    line-height: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    box-shadow: 0 1px 2px 0 rgba(16, 162, 234, 0.3);
+    background: linear-gradient(#10A2EA, #0F99E8);
+    background-color: #10A2EA;
+    color: white;
+    display: block;
+
+    &.isCreating {
+        opacity: 50%;
+    }
+}

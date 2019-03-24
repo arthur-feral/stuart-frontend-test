@@ -15,6 +15,7 @@ import Map from './Map';
 import styles from './app.m.scss';
 import { domLoaded } from './actions';
 import reducer from './reducer';
+import Router, { reducer as routerReducer } from './Router';
 
 const sagaMiddleware = createSagaMiddleware({
   onError: (...args) => {
@@ -24,6 +25,7 @@ const sagaMiddleware = createSagaMiddleware({
 });
 const reducers = {
   app: reducer,
+  router: routerReducer,
 };
 const middlewares = [
   sagaMiddleware,
@@ -46,6 +48,7 @@ ReactDOM.render(
   <Provider store={store}>
     <div className={styles.app}>
       <Map />
+      <Router />
     </div>
   </Provider>,
   document.getElementById('app'),
