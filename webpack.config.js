@@ -1,9 +1,8 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin'; // eslint-disable-line import/no-extraneous-dependencies
-import TerserPlugin from 'terser-webpack-plugin'; // eslint-disable-line import/no-extraneous-dependencies
-import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'; // eslint-disable-line import/no-extraneous-dependencies
-import CopyWebpackPlugin from 'copy-webpack-plugin'; // eslint-disable-line import/no-extraneous-dependencies
-
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
+const CopyWebpackPlugin = require('copy-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
 
 const root = process.cwd();
 const distPath = path.resolve(root, './public/');
