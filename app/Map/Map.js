@@ -30,7 +30,12 @@ export default class Map extends React.Component {
       && isDOMLoaded
     ) {
       this.map = new google.maps.Map(
-        document.getElementById('mapDOMID'), { zoom: 4, center: nantes },
+        document.getElementById('mapDOMID'),
+        {
+          zoom: 12,
+          center: nantes,
+          disableDefaultUI: true,
+        },
       );
     }
   }
