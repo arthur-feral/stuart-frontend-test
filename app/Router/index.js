@@ -10,13 +10,17 @@ import {
   getToAddress,
   isToInvalid,
   isCreating,
+  getDropOff,
+  getPickUp,
 } from './selectors';
 
 const mapStateToProps = (state, props) => ({
   ...props,
   from: getFromAddress(state),
+  pickUp: getPickUp(state),
   isFromInvalid: isFromInvalid(state),
   to: getToAddress(state),
+  dropOff: getDropOff(state),
   isToInvalid: isToInvalid(state),
   isCreating: isCreating(state),
 });
