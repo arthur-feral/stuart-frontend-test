@@ -73,6 +73,7 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         [`${place}Invalid`]: true,
+        [payload.type]: null,
       };
     }
 
