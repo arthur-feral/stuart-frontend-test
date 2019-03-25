@@ -16,6 +16,7 @@ import styles from './app.m.scss';
 import { domLoaded } from './actions';
 import reducer from './reducer';
 import Router, { reducer as routerReducer } from './Router';
+import networkSaga from './network.saga';
 
 const sagaMiddleware = createSagaMiddleware({
   onError: (...args) => {
@@ -30,7 +31,9 @@ const reducers = {
 const middlewares = [
   sagaMiddleware,
 ];
-const sagas = [];
+const sagas = [
+  networkSaga,
+];
 
 const store = createStore(
   combineReducers(reducers),

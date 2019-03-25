@@ -5,16 +5,19 @@ import {
   ROUTER_CREATE_JOB_SUCCEEDED,
   ROUTER_CREATE_JOB_FAILED,
 } from './actionsTypes';
+import { POST_GEOCODE_SUCCEEDED } from '../actionsTypes';
 
 const initialState = {
   from: '',
+  pickUp: null,
   fromInvalid: false,
   to: '',
+  dropOff: null,
   toInvalid: false,
   isCreating: false,
 };
 
-export default (state = initialState, action) => {
+export default (state = initialState, action = {}) => {
   const {
     type,
     payload,
@@ -53,6 +56,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isCreating: false,
+      };
+    }
+
+    case POST_GEOCODE_SUCCEEDED: {
+      const {
+        type,
+        result,
+      } = payload;
+
+      return {
+        ...state,
+        [type]: result,
       };
     }
 
