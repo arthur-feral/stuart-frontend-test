@@ -6,16 +6,16 @@ import {
 } from 'lodash';
 import styles from './router.m.scss';
 
-const getBadgeName = (name, value, isInvalid) => {
+const getBadgeName = (name, value, isValid) => {
   if (value === '') {
     return `${name}BadgeBlank`;
   }
 
-  if (value !== '' && !isInvalid) {
+  if (value !== '' && isValid) {
     return `${name}BadgePresent`;
   }
 
-  if (isInvalid) {
+  if (!isValid) {
     return `${name}BadgeError`;
   }
 
@@ -24,20 +24,14 @@ const getBadgeName = (name, value, isInvalid) => {
 
 export default class Router extends React.Component {
   static propTypes = {
-    from: PropTypes.string,
-    isFromInvalid: PropTypes.bool,
-    to: PropTypes.string,
-    isToInvalid: PropTypes.bool,
+    pickUp: PropTypes.object.isRequired,
+    dropOff: PropTypes.object.isRequired,
     addressFieldChanged: PropTypes.func,
     onClickSubmit: PropTypes.func,
     isCreating: PropTypes.bool,
   };
 
   static defaultProps = {
-    from: '',
-    isFromInvalid: false,
-    to: '',
-    isToInvalid: false,
     addressFieldChanged: noop,
     onClickSubmit: noop,
     isCreating: false,
@@ -53,16 +47,14 @@ export default class Router extends React.Component {
 
   render() {
     const {
-      from,
-      isFromInvalid,
-      to,
-      isToInvalid,
+      pickUp,
+      dropOff,
       onClickSubmit,
       isCreating,
     } = this.props;
 
-    const fromIcon = getBadgeName('pickUp', from, isFromInvalid);
-    const toIcon = getBadgeName('dropOff', to, isToInvalid);
+    const fromIcon = getBadgeName('pickUp', pickUp.address, pickUp.isValid);
+    const toIcon = getBadgeName('dropOff', dropOff.address, dropOff.isValid);
 
     const buttonLabel = isCreating
       ? 'Creating...'
@@ -89,7 +81,7 @@ export default class Router extends React.Component {
         </div>
         <div className={styles.inputs}>
           <div className={styles.inputContainer}>
-            <span className={classNames(styles.inputPlaceholder, { [styles.hidden]: from.length !== 0 })}>
+            <span className={classNames(styles.inputPlaceholder, { [styles.hidden]: pickUp.address.length !== 0 })}>
               Pick up address
             </span>
             <input
@@ -98,11 +90,11 @@ export default class Router extends React.Component {
                 this.addressFieldChanged('pickUp', event);
               }}
               type="text"
-              value={from}
+              value={pickUp.address}
             />
           </div>
           <div className={styles.inputContainer}>
-            <span className={classNames(styles.inputPlaceholder, { [styles.hidden]: to.length !== 0 })}>
+            <span className={classNames(styles.inputPlaceholder, { [styles.hidden]: dropOff.address.length !== 0 })}>
               Drop off address
             </span>
             <input
@@ -111,12 +103,12 @@ export default class Router extends React.Component {
                 this.addressFieldChanged('dropOff', event);
               }}
               type="text"
-              value={to}
+              value={dropOff.address}
             />
           </div>
           <button
             type="submit"
-            disabled={isCreating || isFromInvalid || isToInvalid}
+            disabled={isCreating || !pickUp.isValid || !dropOff.isValid}
             className={classNames(styles.submitButton, { [styles.isCreating]: isCreating })}
             onClick={onClickSubmit}
           >

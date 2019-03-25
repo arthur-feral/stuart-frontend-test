@@ -7,26 +7,25 @@ import { MAP_INITIAL_ZOOM } from '../constants';
 const nantes = { lat: 47.221982, lng: -1.557155 };
 const placePtopType = PropTypes.shape({
   address: PropTypes.string,
-  latitude: PropTypes.number,
-  longitude: PropTypes.number,
+  lat: PropTypes.number,
+  lng: PropTypes.number,
+  isValid: PropTypes.bool,
 });
 
-const getPosition = place => ({
-  lat: place.latitude,
-  lng: place.longitude,
+const getPosition = ({ lat, lng }) => ({
+  lat,
+  lng,
 });
 
 export default class Map extends React.Component {
   static propTypes = {
     isDOMLoaded: PropTypes.bool,
-    pickUp: placePtopType,
-    dropOff: placePtopType,
+    pickUp: placePtopType.isRequired,
+    dropOff: placePtopType.isRequired,
   };
 
   static defaultProps = {
     isDOMLoaded: false,
-    pickUp: null,
-    dropOff: null,
   };
 
   constructor(props) {
@@ -62,7 +61,7 @@ export default class Map extends React.Component {
       );
     }
 
-    if (pickUp) {
+    if (pickUp.isValid) {
       const position = getPosition(pickUp);
       this.pickUp.setPosition(position);
       this.pickUp.setMap(this.map);
@@ -70,7 +69,7 @@ export default class Map extends React.Component {
       this.pickUp.setMap(null);
     }
 
-    if (dropOff) {
+    if (dropOff.isValid) {
       const position = getPosition(dropOff);
       this.dropOff.setPosition(position);
       this.dropOff.setMap(this.map);
@@ -81,14 +80,14 @@ export default class Map extends React.Component {
 
     if (
       previousProps.pickUp !== pickUp
-      && pickUp
+      && pickUp.isValid
     ) {
       this.map.setCenter(getPosition(pickUp));
     }
 
     if (
       previousProps.dropOff !== dropOff
-      && dropOff
+      && dropOff.isValid
     ) {
       this.map.setCenter(getPosition(dropOff));
     }

@@ -11,12 +11,18 @@ import {
 } from '../actions';
 
 const initialState = {
-  from: '',
-  pickUp: null,
-  fromInvalid: true,
-  to: '',
-  dropOff: null,
-  toInvalid: true,
+  pickUp: {
+    address: '',
+    isValid: false,
+    lat: null,
+    lng: null,
+  },
+  dropOff: {
+    address: '',
+    isValid: false,
+    lat: null,
+    lng: null,
+  },
   isCreating: false,
 };
 describe('Router reducer', () => {
@@ -28,7 +34,12 @@ describe('Router reducer', () => {
     it('should update from prop', () => {
       expect(reducer(initialState, addressFieldChanged('pickUp', 'an address'))).toEqual({
         ...initialState,
-        from: 'an address',
+        pickUp: {
+          address: 'an address',
+          isValid: false,
+          lat: null,
+          lng: null,
+        },
       });
     });
   });
@@ -71,6 +82,8 @@ describe('Router reducer', () => {
             'pickUp',
             {
               address: 'an address',
+              latitude: 42,
+              longitude: 2,
             },
           ),
         ),
@@ -78,8 +91,10 @@ describe('Router reducer', () => {
         ...initialState,
         pickUp: {
           address: 'an address',
+          isValid: true,
+          lat: 42,
+          lng: 2,
         },
-        fromInvalid: false,
       });
       expect(
         reducer(
@@ -88,6 +103,8 @@ describe('Router reducer', () => {
             'dropOff',
             {
               address: 'an address',
+              latitude: 42,
+              longitude: 2,
             },
           ),
         ),
@@ -95,8 +112,10 @@ describe('Router reducer', () => {
         ...initialState,
         dropOff: {
           address: 'an address',
+          isValid: true,
+          lat: 42,
+          lng: 2,
         },
-        toInvalid: false,
       });
     });
   });
@@ -112,7 +131,12 @@ describe('Router reducer', () => {
         ),
       ).toEqual({
         ...initialState,
-        fromInvalid: true,
+        pickUp: {
+          address: '',
+          isValid: false,
+          lat: null,
+          lng: null,
+        },
       });
       expect(
         reducer(
@@ -123,7 +147,12 @@ describe('Router reducer', () => {
         ),
       ).toEqual({
         ...initialState,
-        toInvalid: true,
+        dropOff: {
+          address: '',
+          isValid: false,
+          lat: null,
+          lng: null,
+        },
       });
     });
   });
