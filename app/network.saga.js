@@ -66,6 +66,7 @@ function* postJobs(action) {
     fetchParameters,
     body,
   );
+
   try {
     const result = yield call(post, POST_JOBS, parameters);
     yield put(postJobsSucceeded(result));

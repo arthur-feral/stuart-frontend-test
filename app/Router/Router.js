@@ -68,7 +68,11 @@ export default class Router extends React.Component {
       ? 'Creating...'
       : 'Create Job';
     return (
-      <div
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          onClickSubmit();
+        }}
         className={styles.router}
       >
         <div className={styles.icons}>
@@ -119,7 +123,7 @@ export default class Router extends React.Component {
             {buttonLabel}
           </button>
         </div>
-      </div>
+      </form>
     );
   }
 }
