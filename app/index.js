@@ -15,7 +15,10 @@ import Map from './Map';
 import styles from './app.m.scss';
 import { domLoaded } from './actions';
 import reducer from './reducer';
-import Router, { reducer as routerReducer } from './Router';
+import Router, {
+  reducer as routerReducer,
+  saga as routerSaga,
+} from './Router';
 import networkSaga from './network.saga';
 
 const sagaMiddleware = createSagaMiddleware({
@@ -31,8 +34,10 @@ const reducers = {
 const middlewares = [
   sagaMiddleware,
 ];
+
 const sagas = [
   networkSaga,
+  routerSaga,
 ];
 
 const store = createStore(

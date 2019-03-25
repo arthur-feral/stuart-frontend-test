@@ -51,8 +51,11 @@ describe('App actions', () => {
 
   describe('postGeocodeFailed', () => {
     it('should have proper payload', () => {
-      expect(postGeocodeFailed()).toEqual({
+      expect(postGeocodeFailed('pickUp')).toEqual({
         type: 'POST_GEOCODE_FAILED',
+        payload: {
+          type: 'pickUp',
+        },
       });
     });
   });

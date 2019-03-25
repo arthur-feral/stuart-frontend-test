@@ -2,17 +2,16 @@ import reducer from './reducer';
 import {
   createJobFailed,
   createJobRequested, createJobSucceeded,
-  fromFieldChanged,
-  toFieldChanged,
+  addressFieldChanged,
 } from './actions';
 
 const initialState = {
   from: '',
   pickUp: null,
-  fromInvalid: false,
+  fromInvalid: true,
   to: '',
   dropOff: null,
-  toInvalid: false,
+  toInvalid: true,
   isCreating: false,
 };
 describe('Router reducer', () => {
@@ -20,20 +19,11 @@ describe('Router reducer', () => {
     expect(reducer(undefined)).toEqual(initialState);
   });
 
-  describe('ROUTER_FROM_FIELD_CHANGED', () => {
+  describe('ROUTER_ADDRESS_FIELD_CHANGED', () => {
     it('should update from prop', () => {
-      expect(reducer(initialState, fromFieldChanged('an address'))).toEqual({
+      expect(reducer(initialState, addressFieldChanged('pickUp', 'an address'))).toEqual({
         ...initialState,
         from: 'an address',
-      });
-    });
-  });
-
-  describe('ROUTER_TO_FIELD_CHANGED', () => {
-    it('should update to prop', () => {
-      expect(reducer(initialState, toFieldChanged('an address'))).toEqual({
-        ...initialState,
-        to: 'an address',
       });
     });
   });

@@ -1,19 +1,18 @@
 import {
-  ROUTER_FROM_FIELD_CHANGED,
-  ROUTER_TO_FIELD_CHANGED,
   ROUTER_CREATE_JOB_REQUESTED,
   ROUTER_CREATE_JOB_SUCCEEDED,
   ROUTER_CREATE_JOB_FAILED,
+  ROUTER_ADDRESS_FIELD_CHANGED,
 } from './actionsTypes';
-import { POST_GEOCODE_SUCCEEDED } from '../actionsTypes';
+import { POST_GEOCODE_FAILED, POST_GEOCODE_SUCCEEDED } from '../actionsTypes';
 
 const initialState = {
-  from: '',
+  from: '29 Rue du 4 Septembr',
   pickUp: null,
-  fromInvalid: false,
-  to: '',
+  fromInvalid: true,
+  to: '15 Rue de Bourgogn',
   dropOff: null,
-  toInvalid: false,
+  toInvalid: true,
   isCreating: false,
 };
 
@@ -24,23 +23,15 @@ export default (state = initialState, action = {}) => {
   } = action;
 
   switch (type) {
-    case ROUTER_FROM_FIELD_CHANGED: {
+    case ROUTER_ADDRESS_FIELD_CHANGED: {
       const {
-        from,
+        type,
+        address,
       } = payload;
+      const place = type === 'pickUp' ? 'from' : 'to';
       return {
         ...state,
-        from,
-      };
-    }
-
-    case ROUTER_TO_FIELD_CHANGED: {
-      const {
-        to,
-      } = payload;
-      return {
-        ...state,
-        to,
+        [place]: address,
       };
     }
 
@@ -64,10 +55,19 @@ export default (state = initialState, action = {}) => {
         type,
         result,
       } = payload;
-
+      const place = type === 'pickUp' ? 'from' : 'to';
       return {
         ...state,
         [type]: result,
+        [`${place}Invalid`]: false,
+      };
+    }
+
+    case POST_GEOCODE_FAILED: {
+      const place = type === 'pickUp' ? 'from' : 'to';
+      return {
+        ...state,
+        [`${place}Invalid`]: true,
       };
     }
 
