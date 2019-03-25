@@ -29,8 +29,8 @@ export default class Map extends React.Component {
     dropOff: null,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.map = null;
     this.pickUp = new google.maps.Marker({

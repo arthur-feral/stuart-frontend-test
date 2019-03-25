@@ -20,6 +20,7 @@ import Router, {
   saga as routerSaga,
 } from './Router';
 import networkSaga from './network.saga';
+import Toast, { reducer as toastReducer } from './Toast';
 
 const sagaMiddleware = createSagaMiddleware({
   onError: (...args) => {
@@ -30,6 +31,7 @@ const sagaMiddleware = createSagaMiddleware({
 const reducers = {
   app: reducer,
   router: routerReducer,
+  toast: toastReducer,
 };
 const middlewares = [
   sagaMiddleware,
@@ -57,6 +59,7 @@ ReactDOM.render(
     <div className={styles.app}>
       <Map />
       <Router />
+      <Toast />
     </div>
   </Provider>,
   document.getElementById('app'),
