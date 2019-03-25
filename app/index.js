@@ -65,3 +65,7 @@ ReactDOM.render(
 window.onload = () => {
   store.dispatch(domLoaded());
 };
+
+window.stuart = {
+  store,
+};
