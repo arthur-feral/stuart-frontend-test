@@ -1,18 +1,22 @@
 import reducer from './reducer';
 import {
-  createJobFailed,
-  createJobRequested, createJobSucceeded,
-  fromFieldChanged,
-  toFieldChanged,
+  addressFieldChanged,
 } from './actions';
+import {
+  postGeocodeFailed,
+  postGeocodeSucceeded,
+  postJobsFailed,
+  postJobsRequested,
+  postJobsSucceeded,
+} from '../actions';
 
 const initialState = {
   from: '',
   pickUp: null,
-  fromInvalid: false,
+  fromInvalid: true,
   to: '',
   dropOff: null,
-  toInvalid: false,
+  toInvalid: true,
   isCreating: false,
 };
 describe('Router reducer', () => {
@@ -20,39 +24,30 @@ describe('Router reducer', () => {
     expect(reducer(undefined)).toEqual(initialState);
   });
 
-  describe('ROUTER_FROM_FIELD_CHANGED', () => {
+  describe('ROUTER_ADDRESS_FIELD_CHANGED', () => {
     it('should update from prop', () => {
-      expect(reducer(initialState, fromFieldChanged('an address'))).toEqual({
+      expect(reducer(initialState, addressFieldChanged('pickUp', 'an address'))).toEqual({
         ...initialState,
         from: 'an address',
       });
     });
   });
 
-  describe('ROUTER_TO_FIELD_CHANGED', () => {
-    it('should update to prop', () => {
-      expect(reducer(initialState, toFieldChanged('an address'))).toEqual({
-        ...initialState,
-        to: 'an address',
-      });
-    });
-  });
-
-  describe('ROUTER_CREATE_JOB_REQUESTED', () => {
-    it('should update isCreating prop', () => {
-      expect(reducer(initialState, createJobRequested())).toEqual({
+  describe('POST_JOBS_REQUESTED', () => {
+    it('should update from prop', () => {
+      expect(reducer(initialState, postJobsRequested())).toEqual({
         ...initialState,
         isCreating: true,
       });
     });
   });
 
-  describe('ROUTER_CREATE_JOB_SUCCEEDED|ROUTER_CREATE_JOB_SUCCEEDED', () => {
+  describe('POST_JOB_SUCCEEDED|POST_JOB_FAILED', () => {
     it('should update isCreating prop', () => {
       expect(reducer({
         ...initialState,
         isCreating: true,
-      }, createJobSucceeded())).toEqual({
+      }, postJobsSucceeded())).toEqual({
         ...initialState,
         isCreating: false,
       });
@@ -60,9 +55,75 @@ describe('Router reducer', () => {
       expect(reducer({
         ...initialState,
         isCreating: true,
-      }, createJobFailed())).toEqual({
+      }, postJobsFailed())).toEqual({
         ...initialState,
         isCreating: false,
+      });
+    });
+  });
+
+  describe('POST_GEOCODE_SUCCEEDED', () => {
+    it('should update from prop', () => {
+      expect(
+        reducer(
+          initialState,
+          postGeocodeSucceeded(
+            'pickUp',
+            {
+              address: 'an address',
+            },
+          ),
+        ),
+      ).toEqual({
+        ...initialState,
+        pickUp: {
+          address: 'an address',
+        },
+        fromInvalid: false,
+      });
+      expect(
+        reducer(
+          initialState,
+          postGeocodeSucceeded(
+            'dropOff',
+            {
+              address: 'an address',
+            },
+          ),
+        ),
+      ).toEqual({
+        ...initialState,
+        dropOff: {
+          address: 'an address',
+        },
+        toInvalid: false,
+      });
+    });
+  });
+
+  describe('POST_GEOCODE_FAILED', () => {
+    it('should update from prop', () => {
+      expect(
+        reducer(
+          initialState,
+          postGeocodeFailed(
+            'pickUp',
+          ),
+        ),
+      ).toEqual({
+        ...initialState,
+        fromInvalid: true,
+      });
+      expect(
+        reducer(
+          initialState,
+          postGeocodeFailed(
+            'dropOff',
+          ),
+        ),
+      ).toEqual({
+        ...initialState,
+        toInvalid: true,
       });
     });
   });

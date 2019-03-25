@@ -48,19 +48,19 @@ function* postGeocode(action) {
     const result = yield call(post, POST_GEOCODE, parameters);
     yield put(postGeocodeSucceeded(type, result));
   } catch (error) {
-    yield put(postGeocodeFailed());
+    yield put(postGeocodeFailed(type));
   }
 }
 
 function* postJobs(action) {
   const {
-    pickup,
-    dropoff,
+    pickUp,
+    dropOff,
   } = action.payload;
 
   const body = parametizeBody({
-    pickup,
-    dropoff,
+    pickup: pickUp,
+    dropoff: dropOff,
   });
   const parameters = parametize(
     fetchParameters,
@@ -74,7 +74,7 @@ function* postJobs(action) {
   }
 }
 
-export default function* () {
+export default function* networkSaga() {
   yield take(DOM_LOADED);
 
   yield takeLatest(

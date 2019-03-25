@@ -5946,10 +5946,10 @@ fbjs@^0.8.12, fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fetsh@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/fetsh/-/fetsh-0.2.2.tgz#bf396f79708bc70cc9b09a9d47d8e3ed5f6a621d"
-  integrity sha512-DkeZMYXjZ1qQGa9VUE8drbeaT3jz/oiF0BGN4KKSvp9s4pE1bhuJFl3gbnF9L3XUyQN2oJP8nFjx067BJlTPfQ==
+fetsh@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/fetsh/-/fetsh-0.2.3.tgz#5dc192b3f03e6e859ec109f59821e0c870e441b5"
+  integrity sha512-9aOdeNDkaeKnhrsGHv4BYCjFcR/xoIiPw7fyIVWTNu3tRHHur924fcAa9qPTAWW3N6XlY4GHeIr+XuK3g+Gt7g==
   dependencies:
     lodash "^4.17.11"
     query-string "^6.3.0"

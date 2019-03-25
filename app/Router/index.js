@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import Router from './Router';
 import {
-  fromFieldChanged,
-  toFieldChanged,
+  addressFieldChanged,
+  createJobRequest,
 } from './actions';
 import {
   getFromAddress,
@@ -26,8 +26,8 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = {
-  onFromChanged: fromFieldChanged,
-  onToChanged: toFieldChanged,
+  addressFieldChanged,
+  onClickSubmit: createJobRequest,
 };
 
 export default connect(
@@ -36,3 +36,4 @@ export default connect(
 )(Router);
 
 export { default as reducer } from './reducer';
+export { default as saga } from './saga';

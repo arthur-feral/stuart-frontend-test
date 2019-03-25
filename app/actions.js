@@ -34,15 +34,18 @@ export const postGeocodeSucceeded = (type, result) => ({
   },
 });
 
-export const postGeocodeFailed = () => ({
+export const postGeocodeFailed = type => ({
   type: POST_GEOCODE_FAILED,
+  payload: {
+    type,
+  },
 });
 
-export const postJobsRequested = (pickup, dropoff) => ({
+export const postJobsRequested = (pickUp, dropOff) => ({
   type: POST_JOBS_REQUESTED,
   payload: {
-    pickup,
-    dropoff,
+    pickUp,
+    dropOff,
   },
 });
 

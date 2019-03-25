@@ -51,8 +51,11 @@ describe('App actions', () => {
 
   describe('postGeocodeFailed', () => {
     it('should have proper payload', () => {
-      expect(postGeocodeFailed()).toEqual({
+      expect(postGeocodeFailed('pickUp')).toEqual({
         type: 'POST_GEOCODE_FAILED',
+        payload: {
+          type: 'pickUp',
+        },
       });
     });
   });
@@ -65,8 +68,8 @@ describe('App actions', () => {
       )).toEqual({
         type: 'POST_JOBS_REQUESTED',
         payload: {
-          pickup: { address: '29 Rue du 4 Septembre', latitude: 48.86982, longitude: 2.334579 },
-          dropoff: { address: '15 Rue de Bourgogne', latitude: 48.8590453, longitude: 2.3180404 },
+          pickUp: { address: '29 Rue du 4 Septembre', latitude: 48.86982, longitude: 2.334579 },
+          dropOff: { address: '15 Rue de Bourgogne', latitude: 48.8590453, longitude: 2.3180404 },
         },
       });
     });

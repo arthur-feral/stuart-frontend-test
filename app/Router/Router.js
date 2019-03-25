@@ -7,6 +7,10 @@ import {
 import styles from './router.m.scss';
 
 const getBadgeName = (name, value, isInvalid) => {
+  if (value === '') {
+    return `${name}BadgeBlank`;
+  }
+
   if (value !== '' && !isInvalid) {
     return `${name}BadgePresent`;
   }
@@ -24,8 +28,7 @@ export default class Router extends React.Component {
     isFromInvalid: PropTypes.bool,
     to: PropTypes.string,
     isToInvalid: PropTypes.bool,
-    onFromChanged: PropTypes.func,
-    onToChanged: PropTypes.func,
+    addressFieldChanged: PropTypes.func,
     onClickSubmit: PropTypes.func,
     isCreating: PropTypes.bool,
   };
@@ -35,26 +38,17 @@ export default class Router extends React.Component {
     isFromInvalid: false,
     to: '',
     isToInvalid: false,
-    onFromChanged: noop,
-    onToChanged: noop,
+    addressFieldChanged: noop,
     onClickSubmit: noop,
     isCreating: false,
   };
 
-  onFromChanged = (event) => {
+  addressFieldChanged = (type, event) => {
     const {
-      onFromChanged,
+      addressFieldChanged,
     } = this.props;
 
-    onFromChanged(event.target.value, event);
-  };
-
-  onToChanged = (event) => {
-    const {
-      onToChanged,
-    } = this.props;
-
-    onToChanged(event.target.value, event);
+    addressFieldChanged(type, event.target.value, event);
   };
 
   render() {
@@ -96,7 +90,9 @@ export default class Router extends React.Component {
             </span>
             <input
               className={styles.input}
-              onChange={this.onFromChanged}
+              onChange={(event) => {
+                this.addressFieldChanged('pickUp', event);
+              }}
               type="text"
               value={from}
             />
@@ -107,13 +103,16 @@ export default class Router extends React.Component {
             </span>
             <input
               className={styles.input}
-              onChange={this.onToChanged}
+              onChange={(event) => {
+                this.addressFieldChanged('dropOff', event);
+              }}
               type="text"
               value={to}
             />
           </div>
           <button
             type="submit"
+            disabled={isCreating || isFromInvalid || isToInvalid}
             className={classNames(styles.submitButton, { [styles.isCreating]: isCreating })}
             onClick={onClickSubmit}
           >
