@@ -37,12 +37,20 @@ export default class Router extends React.Component {
     isCreating: false,
   };
 
-  addressFieldChanged = (type, event) => {
+  onChangePickUpAddress = (event) => {
     const {
       addressFieldChanged,
     } = this.props;
 
-    addressFieldChanged(type, event.target.value, event);
+    addressFieldChanged('pickUp', event.target.value, event);
+  };
+
+  onChangeDropOffAddress = (event) => {
+    const {
+      addressFieldChanged,
+    } = this.props;
+
+    addressFieldChanged('dropOff', event.target.value, event);
   };
 
   render() {
@@ -86,9 +94,8 @@ export default class Router extends React.Component {
             </span>
             <input
               className={styles.input}
-              onChange={(event) => {
-                this.addressFieldChanged('pickUp', event);
-              }}
+              onBlur={this.onChangePickUpAddress}
+              onChange={this.onChangePickUpAddress}
               type="text"
               value={pickUp.address}
             />
@@ -99,9 +106,8 @@ export default class Router extends React.Component {
             </span>
             <input
               className={styles.input}
-              onChange={(event) => {
-                this.addressFieldChanged('dropOff', event);
-              }}
+              onBlur={this.onChangeDropOffAddress}
+              onChange={this.onChangeDropOffAddress}
               type="text"
               value={dropOff.address}
             />

@@ -5,6 +5,7 @@ import {
   noop,
 } from 'lodash';
 import styles from './toast.m.scss';
+import { TOASTER_DISAPPEAR_TIMER } from '../constants';
 
 export default class Toast extends React.Component {
   static propTypes = {
@@ -28,7 +29,7 @@ export default class Toast extends React.Component {
     ) {
       setTimeout(() => {
         onHide();
-      }, 3000);
+      }, TOASTER_DISAPPEAR_TIMER);
     }
   }
 

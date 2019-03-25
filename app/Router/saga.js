@@ -42,7 +42,7 @@ export default function* routerSaga() {
   );
 
   yield debounce(
-    200,
+    500,
     ROUTER_ADDRESS_FIELD_CHANGED,
     searchAddress,
   );
