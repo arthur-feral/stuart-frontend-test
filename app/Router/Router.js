@@ -7,6 +7,10 @@ import {
 import styles from './router.m.scss';
 
 const getBadgeName = (name, value, isInvalid) => {
+  if (value === '') {
+    return `${name}BadgeBlank`;
+  }
+
   if (value !== '' && !isInvalid) {
     return `${name}BadgePresent`;
   }
@@ -108,6 +112,7 @@ export default class Router extends React.Component {
           </div>
           <button
             type="submit"
+            disabled={isCreating || isFromInvalid || isToInvalid}
             className={classNames(styles.submitButton, { [styles.isCreating]: isCreating })}
             onClick={onClickSubmit}
           >

@@ -1,16 +1,21 @@
 import {
-  ROUTER_CREATE_JOB_REQUESTED,
-  ROUTER_CREATE_JOB_SUCCEEDED,
-  ROUTER_CREATE_JOB_FAILED,
   ROUTER_ADDRESS_FIELD_CHANGED,
 } from './actionsTypes';
-import { POST_GEOCODE_FAILED, POST_GEOCODE_SUCCEEDED } from '../actionsTypes';
+import {
+  POST_GEOCODE_FAILED,
+  POST_GEOCODE_SUCCEEDED,
+  POST_JOBS_REQUESTED,
+  POST_JOBS_FAILED,
+  POST_JOBS_SUCCEEDED,
+} from '../actionsTypes';
 
 const initialState = {
-  from: '29 Rue du 4 Septembr',
+  from: '',
+  // from: '29 Rue du 4 Septembr',
   pickUp: null,
   fromInvalid: true,
-  to: '15 Rue de Bourgogn',
+  to: '',
+  // to: '15 Rue de Bourgogn',
   dropOff: null,
   toInvalid: true,
   isCreating: false,
@@ -35,15 +40,15 @@ export default (state = initialState, action = {}) => {
       };
     }
 
-    case ROUTER_CREATE_JOB_REQUESTED: {
+    case POST_JOBS_REQUESTED: {
       return {
         ...state,
         isCreating: true,
       };
     }
 
-    case ROUTER_CREATE_JOB_SUCCEEDED:
-    case ROUTER_CREATE_JOB_FAILED: {
+    case POST_JOBS_SUCCEEDED:
+    case POST_JOBS_FAILED: {
       return {
         ...state,
         isCreating: false,
@@ -64,7 +69,7 @@ export default (state = initialState, action = {}) => {
     }
 
     case POST_GEOCODE_FAILED: {
-      const place = type === 'pickUp' ? 'from' : 'to';
+      const place = payload.type === 'pickUp' ? 'from' : 'to';
       return {
         ...state,
         [`${place}Invalid`]: true,

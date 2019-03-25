@@ -34,7 +34,7 @@ export const postGeocodeSucceeded = (type, result) => ({
   },
 });
 
-export const postGeocodeFailed = (type) => ({
+export const postGeocodeFailed = type => ({
   type: POST_GEOCODE_FAILED,
   payload: {
     type,

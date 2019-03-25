@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Router from './Router';
 import {
   addressFieldChanged,
-  createJobRequested,
+  createJobRequest,
 } from './actions';
 import {
   getFromAddress,
@@ -27,7 +27,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = {
   addressFieldChanged,
-  onClickSubmit: createJobRequested,
+  onClickSubmit: createJobRequest,
 };
 
 export default connect(

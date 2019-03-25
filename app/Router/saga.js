@@ -8,7 +8,7 @@ import {
 import { DOM_LOADED } from '../actionsTypes';
 import {
   ROUTER_ADDRESS_FIELD_CHANGED,
-  ROUTER_CREATE_JOB_REQUESTED,
+  ROUTER_CREATE_JOB_REQUEST,
 } from './actionsTypes';
 import { postGeocodeRequested, postJobsRequested } from '../actions';
 import { getDropOff, getPickUp, isCreating } from './selectors';
@@ -23,7 +23,6 @@ function* searchAddress(action) {
 
 function* createJob() {
   const isCreatingJob = yield select(isCreating);
-  console.log(isCreatingJob);
   if (!isCreatingJob) {
     const pickUp = yield select(getPickUp);
     const dropOff = yield select(getDropOff);
@@ -37,8 +36,8 @@ function* createJob() {
 export default function* routerSaga() {
   yield take(DOM_LOADED);
 
-  takeEvery(
-    ROUTER_CREATE_JOB_REQUESTED,
+  yield takeEvery(
+    ROUTER_CREATE_JOB_REQUEST,
     createJob,
   );
 

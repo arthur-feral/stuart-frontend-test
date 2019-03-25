@@ -1,6 +1,5 @@
 import {
-  ROUTER_CREATE_JOB_FAILED,
-  ROUTER_CREATE_JOB_REQUESTED, ROUTER_CREATE_JOB_SUCCEEDED,
+  ROUTER_CREATE_JOB_REQUEST,
   ROUTER_ADDRESS_FIELD_CHANGED,
 } from './actionsTypes';
 
@@ -12,14 +11,6 @@ export const addressFieldChanged = (type, address) => ({
   },
 });
 
-export const createJobRequested = () => ({
-  type: ROUTER_CREATE_JOB_REQUESTED,
-});
-
-export const createJobSucceeded = () => ({
-  type: ROUTER_CREATE_JOB_SUCCEEDED,
-});
-
-export const createJobFailed = () => ({
-  type: ROUTER_CREATE_JOB_FAILED,
+export const createJobRequest = () => ({
+  type: ROUTER_CREATE_JOB_REQUEST,
 });

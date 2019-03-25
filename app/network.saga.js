@@ -58,10 +58,9 @@ function* postJobs(action) {
     dropOff,
   } = action.payload;
 
-  console.log(action.payload);
   const body = parametizeBody({
-    pickUp,
-    dropOff,
+    pickup: pickUp,
+    dropoff: dropOff,
   });
   const parameters = parametize(
     fetchParameters,

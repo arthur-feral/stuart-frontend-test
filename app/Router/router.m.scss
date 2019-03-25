@@ -80,6 +80,7 @@
     color: white;
     display: block;
 
+    &:disabled,
     &.isCreating {
         opacity: 0.5;
     }
